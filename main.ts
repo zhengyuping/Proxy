@@ -58,7 +58,9 @@ Deno.serve(async (req) => {
 
     try {
       console.log(`代理请求 URL：${finalUrl}`); // 添加日志
-      const targetResponse = await fetch(proxyRequest);
+      const targetResponse = await fetch(proxyRequest, {
+        redirect: 'manual',
+      });
       // 使用 arrayBuffer 来支持二进制数据（比如图片等）
       const body = await targetResponse.arrayBuffer();
 
@@ -67,6 +69,8 @@ Deno.serve(async (req) => {
       for (const [key, value] of targetResponse.headers.entries()) {
         responseHeaders.set(key, value);
       }
+
+      responseHeaders.set('Host', new URL(finalUrl).hostname); // 设置 Host header
 
       return new Response(body, {
         status: targetResponse.status,
