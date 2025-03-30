@@ -19,6 +19,7 @@ Deno.serve(async (req) => {
       return new Response("无效的 URL，请检查格式。", { status: 400 });
     }
     await kv.set(TARGET_KEY, newTargetUrl);
+    console.log(`代理目标 URL 已更新为：${newTargetUrl}`); // 添加日志
     return new Response(`代理目标 URL 已更新为：${newTargetUrl}`);
   }
 
@@ -56,6 +57,7 @@ Deno.serve(async (req) => {
     });
 
     try {
+      console.log(`代理请求 URL：${finalUrl}`); // 添加日志
       const targetResponse = await fetch(proxyRequest);
       // 使用 arrayBuffer 来支持二进制数据（比如图片等）
       const body = await targetResponse.arrayBuffer();
