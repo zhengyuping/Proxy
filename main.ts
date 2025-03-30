@@ -1,4 +1,6 @@
 
+export {};
+
 // 打开 Deno KV（全局只需打开一次）
 const kv = await Deno.openKv();
 // 使用一个固定的 key 来存储目标 URL
@@ -33,7 +35,11 @@ Deno.serve(async (req) => {
     const baseUrl = result.value as string;
 
     // 去掉 /proxy 前缀，剩余部分作为相对路径
-    const proxyPath = url.pathname.slice("/proxy".length);
+    let proxyPath = url.pathname.slice("/proxy".length);
+    // 确保 proxyPath 不以 / 开头
+    if (proxyPath.startsWith("/")) {
+      proxyPath = proxyPath.slice(1);
+    }
     // 构造最终的请求 URL：以存储的 baseUrl 为基准，加上剩余路径和原有查询参数（注意：此处不包括 setUrl 参数，因为已单独处理）
     let finalUrl: string;
     try {
