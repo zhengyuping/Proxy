@@ -72,6 +72,11 @@ Deno.serve(async (req) => {
 
       responseHeaders.set('Host', new URL(finalUrl).hostname); // 设置 Host header
 
+      const contentType = targetResponse.headers.get('content-type');
+      if (contentType) {
+        responseHeaders.set('Content-Type', contentType);
+      }
+
       return new Response(body, {
         status: targetResponse.status,
         headers: responseHeaders,
