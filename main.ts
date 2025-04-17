@@ -31,8 +31,83 @@ Deno.serve(async (req) => {
     const result = await kv.get(TARGET_KEY);
     if (!result.value) {
       return new Response(
-          "未设置代理目标 URL，请使用 ?setUrl=你的目标URL 进行设置。",
-          { status: 400 }
+    `<!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>设置代理 URL</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f2f5;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 2rem;
+          width: 90%;
+          max-width: 600px;
+          text-align: center;
+        }
+        h1 {
+          color: #28a745;
+          margin-bottom: 1.5rem;
+        }
+        form {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        label {
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+          text-align: left;
+        }
+        input[type="url"] {
+          padding: 0.75rem;
+          margin-bottom: 1rem;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+        }
+        button {
+          background-color: #28a745;
+          color: white;
+          padding: 0.75rem 1.5rem;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        button:hover {
+          background-color: #218838;
+        }
+        p {
+          margin-top: 1rem;
+          color: #6c757d;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>设置代理 URL</h1>
+        <form method="GET">
+          <label for="setUrl">目标 URL:</label>
+          <input type="url" id="setUrl" name="setUrl" placeholder="https://www.google.com" required>
+          <button type="submit">提交</button>
+export {};
+        </form>
+        <p>请使用此页面设置代理目标 URL。</p>
+      </div>
+    </body>
+    </html>`
       );
     }
     const baseUrl = result.value as string;
