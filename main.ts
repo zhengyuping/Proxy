@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
     const result = await kv.get(TARGET_KEY);
     if (!result.value) {
       return new Response(
-    `<!DOCTYPE html>
+   " <!DOCTYPE html>
     <html lang="zh-CN">
     <head>
       <meta charset="UTF-8">
@@ -107,7 +107,7 @@ export {};
         <p>请使用此页面设置代理目标 URL。</p>
       </div>
     </body>
-    </html>`
+    </html>"
       );
     }
     const baseUrl = result.value as string;
@@ -153,7 +153,7 @@ export {};
 
   // 其他请求返回提示信息
   return new Response(
-    `<!DOCTYPE html>
+    "<!DOCTYPE html>
     <html lang="zh-CN">
     <head>
       <meta charset="UTF-8">
@@ -229,6 +229,6 @@ export {};
         <p>请使用此页面设置代理目标 URL。</p>
       </div>
     </body>
-    </html>`
+    </html>"
   );
 });
