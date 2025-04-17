@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
   // 如果请求带有 setUrl 参数，则更新目标 URL
   if (url.searchParams.has("setUrl")) {
     const newTargetUrl = url.searchParams.get("setUrl")!;
-    if (newTargetUrl === '') {
+    if (newTargetUrl === '?') {
       await kv.delete(TARGET_KEY);
       console.log('代理目标 URL 已清除');
       return new Response('代理目标 URL 已清除');
